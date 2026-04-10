@@ -1,0 +1,23 @@
+{
+  "input_folder": "input",
+  "output_folder": "output",
+  "temp_folder": "temp",
+  "facecam_coords": {"x": 0, "y": 0, "w": 400, "h": 225},
+  "db_threshold": -20.0,
+  "game_profiles": {
+    "valorant": {
+      "killfeed_region": [100, 1400, 400, 1900],
+      "keywords": ["ace", "clutch", "nice", "wow"]
+    },
+    "cs2": {
+      "killfeed_region": [50, 1500, 300, 1920],
+      "keywords": ["headshot", "planted", "no way", "clutch"]
+    },
+    "delta_force": {
+      "killfeed_region": [800, 100, 1000, 500],
+      "keywords": ["kill", "headshot", "objective"]
+    }
+  },
+  "current_game": "valorant",
+  "use_gpu": true
+}

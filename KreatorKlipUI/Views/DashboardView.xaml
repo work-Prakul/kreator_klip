@@ -1,0 +1,100 @@
+<Page
+    x:Class="KreatorKlipUI.Views.DashboardView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:KreatorKlipUI.Views"
+    xmlns:vm="using:KreatorKlipUI.ViewModels"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid Background="{StaticResource AppBackgroundBrush}">
+        <ScrollViewer Padding="32">
+            <StackPanel Spacing="32" MaxWidth="1200" HorizontalAlignment="Left">
+                <!-- Header Section -->
+                <StackPanel Spacing="8">
+                    <TextBlock Text="Bulk Processing" FontSize="28" FontWeight="SemiBold" Foreground="{StaticResource TextPrimaryBrush}" />
+                    <StackPanel Orientation="Horizontal" Spacing="24">
+                        <TextBlock Text="Queue" Foreground="{StaticResource AccentPurpleLightBrush}" FontWeight="SemiBold" Cursor="Hand" />
+                        <TextBlock Text="History" Foreground="{StaticResource TextSecondaryBrush}" Cursor="Hand" />
+                        <TextBlock Text="Templates" Foreground="{StaticResource TextSecondaryBrush}" Cursor="Hand" />
+                    </StackPanel>
+                </StackPanel>
+
+                <!-- Bento Stats Grid -->
+                <Grid ColumnDefinitions="*, *, *, *" ColumnSpacing="20">
+                    <Border Grid.Column="0" Style="{StaticResource PremiumCardStyle}">
+                        <StackPanel>
+                            <TextBlock Text="ACTIVE JOBS" FontSize="10" FontWeight="Bold" Foreground="{StaticResource TextSecondaryBrush}" CharacterSpacing="100" />
+                            <TextBlock Text="24" FontSize="32" FontWeight="SemiBold" Foreground="{StaticResource TextPrimaryBrush}" Margin="0,4,0,0" />
+                        </StackPanel>
+                    </Border>
+                    <Border Grid.Column="1" Style="{StaticResource PremiumCardStyle}">
+                        <StackPanel>
+                            <TextBlock Text="TOTAL STORAGE" FontSize="10" FontWeight="Bold" Foreground="{StaticResource TextSecondaryBrush}" CharacterSpacing="100" />
+                            <TextBlock Text="1.2 TB" FontSize="32" FontWeight="SemiBold" Foreground="{StaticResource TextPrimaryBrush}" Margin="0,4,0,0" />
+                        </StackPanel>
+                    </Border>
+                    <Border Grid.Column="2" Style="{StaticResource PremiumCardStyle}">
+                        <StackPanel>
+                            <TextBlock Text="AVG. SPEED" FontSize="10" FontWeight="Bold" Foreground="{StaticResource TextSecondaryBrush}" CharacterSpacing="100" />
+                            <TextBlock Text="4.2x" FontSize="32" FontWeight="SemiBold" Foreground="{StaticResource TextPrimaryBrush}" Margin="0,4,0,0" />
+                        </StackPanel>
+                    </Border>
+                    <Border Grid.Column="3" Background="{StaticResource SurfaceHighBrush}" CornerRadius="8" Padding="16">
+                        <StackPanel>
+                            <TextBlock Text="REMAINING" FontSize="10" FontWeight="Bold" Foreground="{StaticResource TextSecondaryBrush}" CharacterSpacing="100" />
+                            <TextBlock Text="04:12:00" FontSize="32" FontWeight="SemiBold" Foreground="{StaticResource AccentPurpleBrush}" Margin="0,4,0,0" />
+                            <ProgressBar Value="65" Margin="0,12,-16,-16" />
+                        </StackPanel>
+                    </Border>
+                </Grid>
+
+                <!-- Queue Section Header -->
+                <Grid>
+                    <TextBlock Text="Process Queue" FontSize="20" FontWeight="SemiBold" Foreground="{StaticResource TextPrimaryBrush}" VerticalAlignment="Center" />
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="12">
+                        <Button Content="Pause All" Background="{StaticResource SurfaceHighBrush}" Foreground="{StaticResource TextPrimaryBrush}" BorderThickness="0" />
+                        <Button Content="New Batch" Style="{StaticResource AccentButtonPremium}" Command="{x:Bind ViewModel.StartProcessingCommand}" />
+                    </StackPanel>
+                </Grid>
+
+                <!-- Queue List -->
+                <ItemsControl ItemsSource="{x:Bind ViewModel.PendingVods}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate x:DataType="x:String">
+                            <Border Style="{StaticResource PremiumCardStyle}" Margin="0,0,0,12">
+                                <Grid ColumnDefinitions="120, *, Auto" ColumnSpacing="20">
+                                    <!-- Mini Thumbnail Placeholder -->
+                                    <Border Grid.Column="0" Background="{StaticResource SurfaceHighestBrush}" Height="70" CornerRadius="4">
+                                        <SymbolIcon Symbol="Video" Foreground="{StaticResource TextSecondaryBrush}" />
+                                    </Border>
+
+                                    <!-- Details -->
+                                    <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                        <Grid>
+                                            <TextBlock Text="{x:Bind}" FontSize="14" FontWeight="Medium" Foreground="{StaticResource TextPrimaryBrush}" />
+                                            <TextBlock Text="ID: CS-9921" FontSize="10" Foreground="{StaticResource TextSecondaryBrush}" HorizontalAlignment="Right" />
+                                        </Grid>
+                                        
+                                        <!-- Waveform Placeholder -->
+                                        <Rectangle Height="20" Fill="{StaticResource AccentPurpleBrush}" Opacity="0.2" Margin="0,12" />
+                                        
+                                        <Grid Margin="0,4">
+                                            <TextBlock Text="Scanning Frames..." FontSize="11" Foreground="{StaticResource AccentPurpleLightBrush}" />
+                                            <TextBlock Text="42%" FontSize="11" Foreground="{StaticResource TextSecondaryBrush}" HorizontalAlignment="Right" />
+                                        </Grid>
+                                        <ProgressBar Value="42" />
+                                    </StackPanel>
+
+                                    <!-- Actions -->
+                                    <Button Grid.Column="2" Background="Transparent" BorderThickness="0" VerticalAlignment="Top">
+                                        <SymbolIcon Symbol="More" Foreground="{StaticResource TextSecondaryBrush}" />
+                                    </Button>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</Page>

@@ -1,0 +1,11 @@
+flet>=0.21.0
+faster-whisper
+ultralytics
+librosa
+easyocr
+ffmpeg-python
+numpy<2.0.0
+opencv-python
+torch --index-url https://download.pytorch.org/whl/cu121
+torchvision --index-url https://download.pytorch.org/whl/cu121
+torchaudio --index-url https://download.pytorch.org/whl/cu121
