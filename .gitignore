@@ -1,0 +1,84 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual environments
+venv/
+ENV/
+env/
+.venv
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Logs
+logs/
+*.log
+
+# Temporary files
+temp/
+tmp/
+*.tmp
+*.bak
+*.swp
+
+# Large media files
+*.mp4
+*.mkv
+*.wav
+*.mp3
+*.flv
+*.mov
+
+# Session/Cache files
+session_state.json
+*.cache
+.cache/
+
+# Output (can be regenerated)
+output/
+results/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE/Editor
+*.sublime-project
+*.sublime-workspace
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Environment variables
+.env
+.env.local
+
+# Dependencies (can be reinstalled)
+requirements-dev.txt.lock
