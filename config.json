@@ -1,23 +1,129 @@
 {
-  "input_folder": "input",
-  "output_folder": "output",
-  "temp_folder": "temp",
-  "facecam_coords": {"x": 0, "y": 0, "w": 400, "h": 225},
-  "db_threshold": -20.0,
-  "game_profiles": {
-    "valorant": {
-      "killfeed_region": [100, 1400, 400, 1900],
-      "keywords": ["ace", "clutch", "nice", "wow"]
-    },
-    "cs2": {
-      "killfeed_region": [50, 1500, 300, 1920],
-      "keywords": ["headshot", "planted", "no way", "clutch"]
-    },
-    "delta_force": {
-      "killfeed_region": [800, 100, 1000, 500],
-      "keywords": ["kill", "headshot", "objective"]
+  "project": {
+    "name": "KreatorKlip",
+    "version": "1.2.0",
+    "input_folder": "input",
+    "output_folder": "output",
+    "temp_folder": "temp"
+  },
+  "hardware": {
+    "device": "auto",
+    "encoding_codec": "h264_nvenc",
+    "gpu_parallel_jobs": 2,
+    "cpu_parallel_jobs": 4,
+    "max_vram_usage_pct": 0.8,
+    "fallback_to_cpu": true
+  },
+  "pipeline": {
+    "max_clips_per_vod": 15,
+    "pre_buffer_sec": 8,
+    "post_buffer_min_sec": 12,
+    "post_buffer_max_sec": 25,
+    "dedupe_window_sec": 12,
+    "selection_strategy": "top_n",
+    "session_persistence": true
+  },
+  "vision": {
+    "autodetect_game": true,
+    "enable_motion_gate": true,
+    "motion_gate_weight": 0.2,
+    "motion_sample_fps": 1,
+    "resize_dim": [
+      320,
+      180
+    ]
+  },
+  "audio": {
+    "db_threshold": -20.0,
+    "spike_threshold": 0.7,
+    "min_spike_gap_sec": 2.0
+  },
+  "transcription": {
+    "segment_duration_sec": 20,
+    "tier_settings": {
+      "low": {
+        "model": "tiny",
+        "compute": "int8",
+        "batch": 1
+      },
+      "mid": {
+        "model": "base",
+        "compute": "float32",
+        "batch": 4
+      },
+      "high": {
+        "model": "small",
+        "compute": "float16",
+        "batch": 6
+      }
     }
   },
-  "current_game": "valorant",
-  "use_gpu": true
+  "scoring": {
+    "audio_weight": 0.45,
+    "keyword_weight": 0.4,
+    "density_bonus": 0.1,
+    "proximity_bonus": 0.05,
+    "max_score": 10,
+    "keyword_map": {
+      "ace": 5,
+      "clutch": 5,
+      "headshot": 4,
+      "no way": 4,
+      "lets go": 3,
+      "insane": 3,
+      "wow": 2,
+      "nice": 2
+    }
+  },
+  "render": {
+    "preset": "p4",
+    "vertical_aspect": "9:16",
+    "output_resolution": "1080x1920",
+    "cq": 23
+  },
+  "game_profiles": {
+    "valorant": {
+      "motion_threshold": 0.3,
+      "ui_anchor_color": [
+        0,
+        255,
+        255
+      ],
+      "killfeed_region": [
+        100,
+        1400,
+        400,
+        1900
+      ]
+    },
+    "cs2": {
+      "motion_threshold": 0.28,
+      "ui_anchor_color": [
+        255,
+        255,
+        255
+      ],
+      "killfeed_region": [
+        50,
+        1500,
+        300,
+        1920
+      ]
+    },
+    "delta_force": {
+      "motion_threshold": 0.2,
+      "ui_anchor_color": [
+        0,
+        255,
+        0
+      ],
+      "killfeed_region": [
+        800,
+        100,
+        1000,
+        500
+      ]
+    }
+  },
+  "current_game": "valorant"
 }

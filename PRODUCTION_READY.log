@@ -1,0 +1,16 @@
+{
+  "test_type": "2-hour VOD simulation",
+  "total_triggers": 50,
+  "simulated_duration_seconds": 7200,
+  "actual_processing_time_seconds": 2.120846748352051,
+  "throughput_triggers_per_second": 23.575489383592288,
+  "throughput_seconds_per_trigger": 0.04241693496704101,
+  "max_concurrent_renders": 4,
+  "completed_clips": 50,
+  "failed_clips": 0,
+  "success_rate_percent": 100.0,
+  "session_persistence": "ACTIVE",
+  "crash_recovery": "IMPLEMENTED",
+  "conveyor_protocol": "ACTIVE",
+  "dynamic_throttling": "ACTIVE"
+}
