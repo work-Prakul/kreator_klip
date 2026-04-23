@@ -1,6 +1,9 @@
 import asyncio
 import os
 import logging
+import gc
+import torch
+import subprocess
 from typing import List, Dict, Any
 
 import ffmpeg
@@ -61,7 +64,26 @@ def transcribe_audio(audio_path: str, model_size: str = "base", device: str = "c
         return []
 
     try:
-        raw_segments, _ = model.transcribe(audio_path, beam_size=5, word_timestamps=True)
+        import json
+        whisper_lang = "hi"
+        try:
+            with open("config.json", "r", encoding="utf-8") as f:
+                whisper_lang = json.load(f).get("whisper_language", "hi")
+        except:
+            pass
+
+        # Tightened params for VRAM safety
+        raw_segments, _ = model.transcribe(
+            audio_path,
+            language=whisper_lang,
+            task="transcribe",
+            beam_size=1,
+            best_of=1,
+            temperature=0,
+            compression_ratio_threshold=2.4,
+            condition_on_previous_text=False,
+            word_timestamps=True
+        )
         segment_data = _parse_transcript_segments(raw_segments, 0.0)
         return segment_data
     except Exception as exc:
@@ -106,11 +128,23 @@ def _sync_transcribe_batch(segment_specs: List[Dict[str, Any]], model_size: str,
         return []
 
     output = []
-    for spec in segment_specs:
+    for i, spec in enumerate(segment_specs):
         path = spec["path"]
         start_offset = spec.get("start", 0.0)
+        logging.info(f"DEBUG: Processing segment {i+1}/{len(segment_specs)}")
         try:
-            raw_segments, _ = model.transcribe(path, beam_size=5, word_timestamps=True)
+            # Tightened params for VRAM safety
+            raw_segments, _ = model.transcribe(
+                path,
+                language=whisper_cfg.get("language", "hi"),
+                task="transcribe",
+                beam_size=1,
+                best_of=1,
+                temperature=0,
+                compression_ratio_threshold=2.4,
+                condition_on_previous_text=False,
+                word_timestamps=True
+            )
             output.extend(_parse_transcript_segments(raw_segments, start_offset))
         except Exception as exc:
             logging.warning(f"Segment transcription failed for {path}: {exc}")
@@ -130,6 +164,14 @@ async def transcribe_segments_batched(
     if not segment_specs:
         return []
 
+    # Memory cleanup before starting batch
+    gc.collect()
+    if torch.cuda.is_available():
+        torch.cuda.empty_cache()
+
+    # Force model_size to small as requested
+    model_size = "small"
+
     batch_size = min(max(int(hardware_profile.vram_gb * 2), 1), max_limit)
     all_results: List[Dict[str, Any]] = []
 
@@ -137,6 +179,11 @@ async def transcribe_segments_batched(
         batch = segment_specs[i:i + batch_size]
         batch_results = await asyncio.to_thread(_sync_transcribe_batch, batch, model_size, hardware_profile)
         all_results.extend(batch_results)
+
+    # Memory cleanup after finishing batch
+    gc.collect()
+    if torch.cuda.is_available():
+        torch.cuda.empty_cache()
 
     return all_results
 
@@ -208,24 +255,50 @@ def run_finisher_stage(trimmed_clip_path: str, final_output_path: str, config: D
         )
 
         ass_path = trimmed_clip_path.replace(".mp4", ".ass")
-        generate_ass(segment_data, ass_path)
+        if config.get("enable_subtitles", False):
+            generate_ass(segment_data, ass_path)
 
-        logging.info("Finisher: Burning subtitles into final video...")
-        safe_ass_path = ass_path.replace("\\", "/").replace(":", "\\:")
+            logging.info("Finisher: Burning subtitles into final video...")
+            
+            # Windows-specific: ass filter requires very specific path escaping
+            # We use absolute path with forward slashes and escape the colon
+            abs_ass_path = os.path.abspath(ass_path).replace("\\", "/")
+            if ":" in abs_ass_path:
+                drive, path = abs_ass_path.split(":", 1)
+                safe_ass_path = f"{drive}\\:{path}"
+            else:
+                safe_ass_path = abs_ass_path
+
         force_cpu = config.get("hardware_overrides", {}).get("force_cpu", False)
-
-        stream = ffmpeg.input(trimmed_clip_path)
-        video = stream.video.filter("ass", safe_ass_path)
-        audio = stream.audio
+        
+        # Build command list for direct execution (more reliable than ffmpeg-python for complex filters on Windows)
+        cmd = ["ffmpeg", "-i", trimmed_clip_path]
+        
+        if config.get("enable_subtitles", False) and segment_data:
+            # Only apply subtitles if we actually have words and subtitles are enabled
+            cmd.extend(["-vf", f"ass='{safe_ass_path}'"])
+        
+        cmd.extend([
+            "-c:v", "h264_nvenc" if not force_cpu else "libx264",
+            "-preset", "p4",
+            "-c:a", "aac",
+            "-y",
+            final_output_path
+        ])
 
         try:
-            if not force_cpu:
-                ffmpeg.output(video, audio, final_output_path, vcodec="h264_nvenc", preset=config.get("render_preset", "p4")).overwrite_output().run(quiet=True)
-            else:
-                ffmpeg.output(video, audio, final_output_path, vcodec="libx264", preset="fast").overwrite_output().run(quiet=True)
-        except ffmpeg.Error as exc:
-            logging.warning(f"Finisher: GPU encode failed ({exc}), falling back to CPU.")
-            ffmpeg.output(video, audio, final_output_path, vcodec="libx264", preset="fast").overwrite_output().run(quiet=True)
+            subprocess.run(cmd, check=True, capture_output=True, text=True)
+        except subprocess.CalledProcessError as exc:
+            logging.warning(f"Finisher: GPU encode failed, falling back to CPU. Error: {exc.stderr}")
+            # Fallback to CPU
+            cmd_cpu = list(cmd)
+            # Find the codec index and change it
+            for i, arg in enumerate(cmd_cpu):
+                if arg == "h264_nvenc":
+                    cmd_cpu[i] = "libx264"
+                if arg == "p4":
+                    cmd_cpu[i] = "fast"
+            subprocess.run(cmd_cpu, check=True, capture_output=True)
 
         logging.info(f"Finisher: Successfully generated final short -> {final_output_path}")
         for path in [temp_audio, ass_path]:

@@ -83,7 +83,7 @@ class AssemblyLineEngine:
         """Stream triggers as they are validated, enabling real-time processing."""
         logger.info("=== ASSEMBLY LINE: STREAMING SCAN PHASE ===")
 
-        self.profile = profile_system(config.get("hardware_overrides", {}))
+        self.profile = profile_system(config.get("hardware_overrides", config.get("hardware", {})))
         logger.info(f"Hardware Confirmed: {self.profile['device']} with {self.profile.get('whisper_model', 'base')} model.")
         log_callback(f"Hardware Profiling: {self.profile['device']} / {self.profile.get('whisper_model', 'base')}", "INFO")
 
@@ -105,7 +105,10 @@ class AssemblyLineEngine:
         clear_gpu_cache()
         log_callback(f"Scanner complete: {len(candidates)} candidate events found.", "INFO")
 
-        validated_events = await asyncio.to_thread(validate_video, video_path, candidates, game_cfg, log_callback)
+        # Pass full config (tagged with game ID) to validator for correct thresholds
+        validator_config = dict(config)
+        validator_config["_game_id"] = self.current_game
+        validated_events = await asyncio.to_thread(validate_video, video_path, candidates, validator_config, log_callback)
         clear_gpu_cache()
 
         clip_id = 1
@@ -139,7 +142,7 @@ class AssemblyLineEngine:
                 self.save_session_state()
                 progress_callback(packet.clip_id, 10)
 
-                output_folder = config.get("output_folder", "output")
+                output_folder = config.get("project", {}).get("output_folder", config.get("output_folder", "output"))
                 os.makedirs(output_folder, exist_ok=True)
 
                 temp_clip = os.path.join("temp", f"raw_event_{packet.clip_id}.mp4")
@@ -158,7 +161,7 @@ class AssemblyLineEngine:
                 progress_callback(packet.clip_id, 50)
                 log_callback(f"CLIP {packet.clip_id}: Finisher stage started.", "INFO")
 
-                await asyncio.to_thread(
+                success = await asyncio.to_thread(
                     finish_clip,
                     temp_clip,
                     final_clip,
@@ -166,11 +169,18 @@ class AssemblyLineEngine:
                     self.profile
                 )
 
-                progress_callback(packet.clip_id, 100)
-                packet.status = "COMPLETED"
-                packet.progress = 1.0
-                self.completed_count += 1
-                log_callback(f"CLIP {packet.clip_id}: COMPLETED", "SUCCESS")
+                if success:
+                    progress_callback(packet.clip_id, 100)
+                    packet.status = "COMPLETED"
+                    packet.progress = 1.0
+                    self.completed_count += 1
+                    log_callback(f"CLIP {packet.clip_id}: COMPLETED", "SUCCESS")
+                else:
+                    packet.status = "FAILED"
+                    packet.error_message = "Finisher stage failed (ffmpeg error)"
+                    self.failed_count += 1
+                    log_callback(f"CLIP {packet.clip_id}: FAILED in Finisher stage.", "ERROR")
+                
                 self.save_session_state()
 
             except Exception as e:

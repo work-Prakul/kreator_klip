@@ -31,7 +31,18 @@
     "resize_dim": [
       320,
       180
-    ]
+    ],
+    "enable_killfeed_ocr": true,
+    "player_handles": [
+      "wildflame",
+      "wildflame75"
+    ],
+    "spectator_strings": [
+      "spectating",
+      "observer"
+    ],
+    "motion_threshold": 0.12,
+    "motion_threshold_note": "Increase if menus/lobbies appear in output. Decrease if valid kill clips are being dropped."
   },
   "audio": {
     "db_threshold": -20.0,
@@ -94,6 +105,25 @@
         1400,
         400,
         1900
+      ],
+      "keywords": [
+        "\u0905\u0930\u0947",
+        "\u092d\u093e\u0908",
+        "\u0915\u094d\u092f\u093e",
+        "\u092e\u093e\u0930 \u0926\u093f\u092f\u093e",
+        "\u092c\u091a \u0917\u092f\u093e",
+        "\u090f\u0938",
+        "\u0915\u094d\u0932\u091a",
+        "\u0939\u0947\u0921\u0936\u0949\u091f",
+        "\u0928\u093f\u0915\u093e\u0932",
+        "\u092d\u093e\u0917",
+        "\u0906 \u0917\u092f\u093e",
+        "\u0915\u092e\u093e\u0932",
+        "ace",
+        "clutch",
+        "headshot",
+        "nice",
+        "wow"
       ]
     },
     "cs2": {
@@ -108,6 +138,22 @@
         1500,
         300,
         1920
+      ],
+      "keywords": [
+        "\u092d\u093e\u0908",
+        "\u092e\u093e\u0930 \u0926\u093f\u092f\u093e",
+        "\u092c\u092e",
+        "\u092a\u094d\u0932\u093e\u0902\u091f",
+        "\u0921\u093f\u092b\u094d\u092f\u0942\u091c",
+        "\u0939\u0947\u0921\u0936\u0949\u091f",
+        "\u0928\u093f\u0915\u093e\u0932",
+        "\u0915\u094d\u0932\u091a",
+        "\u092c\u091a \u0917\u092f\u093e",
+        "\u0915\u092e\u093e\u0932",
+        "headshot",
+        "planted",
+        "clutch",
+        "no way"
       ]
     },
     "delta_force": {
@@ -122,8 +168,24 @@
         100,
         1000,
         500
+      ],
+      "keywords": [
+        "\u092e\u093e\u0930 \u0926\u093f\u092f\u093e",
+        "\u092d\u093e\u0908",
+        "\u0906 \u0917\u092f\u093e",
+        "\u0928\u093f\u0915\u093e\u0932",
+        "\u0939\u0947\u0921\u0936\u0949\u091f",
+        "\u0911\u092c\u094d\u091c\u0947\u0915\u094d\u091f\u093f\u0935",
+        "\u0915\u094d\u0932\u091a",
+        "\u092c\u091a \u0917\u092f\u093e",
+        "kill",
+        "headshot",
+        "objective"
       ]
     }
   },
-  "current_game": "valorant"
+  "current_game": "valorant",
+  "whisper_language": "hi",
+  "whisper_multilingual": true,
+  "enable_subtitles": false
 }

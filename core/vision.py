@@ -164,32 +164,33 @@ def motion_score(video_path: str, timestamp: float, config: Dict[str, Any]) -> f
 
             # Calculate optical flow using Farneback algorithm
             flow = cv2.calcOpticalFlowFarneback(
-                prev, next_frame,
-                pyr_scale=0.5,
-                levels=3,
-                winsize=15,
-                iterations=3,
-                poly_n=5,
-                poly_sigma=1.2,
-                flags=0
+                prev,        # pos 1: previous frame
+                next_frame,  # pos 2: current frame
+                None,        # pos 3: REQUIRED 'flow' argument (pass None to create new)
+                0.5,         # pyr_scale
+                3,           # levels
+                15,          # winsize
+                3,           # iterations
+                5,           # poly_n
+                1.2,         # poly_sigma
+                0            # flags
             )
 
-            if flow is None or flow.size != prev.size:
+            if flow is None:
                 continue
 
             # Compute mean magnitude
             magnitude = np.sqrt(flow[..., 0] ** 2 + flow[..., 1] ** 2)
             mean_magnitude = float(np.mean(magnitude))
+            logger.info(f"Vision: Clip at {timestamp} scored {mean_magnitude:.3f}")
             flow_scores.append(mean_magnitude)
 
         if not flow_scores:
             logger.warning(f"No valid optical flow computed for {video_path}")
             return 0.0
 
-        # Get game-specific threshold
-        current_game = config.get("current_game", "valorant")
-        game_profiles = config.get("game_profiles", {})
-        motion_threshold = game_profiles.get(current_game, {}).get("motion_threshold", 0.25)
+        # Get global vision threshold
+        motion_threshold = config.get("vision", {}).get("motion_threshold", 0.12)
 
         # Normalize by frame diagonal for resolution consistency
         cap = cv2.VideoCapture(video_path)
@@ -222,25 +223,109 @@ def motion_score(video_path: str, timestamp: float, config: Dict[str, Any]) -> f
         return 0.0
 
 
+_ocr_reader = None
+
+def _get_ocr_reader(use_gpu):
+    global _ocr_reader
+    if _ocr_reader is None:
+        import easyocr
+        _ocr_reader = easyocr.Reader(['en'], gpu=use_gpu)
+    return _ocr_reader
+
+
+def detect_player_kill(video_path, timestamp, config):
+    """
+    Returns True if wildflame/wildflame75 appears as KILLER
+    in the killfeed at the given timestamp.
+    Returns False if they appear as victim, are absent,
+    or a spectator indicator is present.
+    """
+    try:
+        if not config.get("vision", {}).get("enable_killfeed_ocr", False):
+            return True
+
+        cap = cv2.VideoCapture(video_path)
+        if not cap.isOpened():
+            return False
+
+        cap.set(cv2.CAP_PROP_POS_MSEC, timestamp * 1000)
+        ret, frame = cap.read()
+        cap.release()
+
+        if not ret or frame is None:
+            return False
+
+        use_gpu = config.get("use_gpu", True)
+        reader = _get_ocr_reader(use_gpu)
+
+        # 4. Check for spectator indicators on the FULL frame first
+        spectator_strings = config.get("vision", {}).get("spectator_strings", ["spectating", "observer"])
+        full_frame_results = reader.readtext(frame)
+        for _, text, conf in full_frame_results:
+            if conf > 0.4:
+                text_lower = text.lower()
+                if any(s in text_lower for s in spectator_strings):
+                    return False
+
+        # 2. Get killfeed_region
+        current_game = config.get("current_game", "generic")
+        killfeed_region = config.get("game_profiles", {}).get(current_game, {}).get("killfeed_region", [0, 0, 0, 0])
+        if len(killfeed_region) < 4:
+            return False
+            
+        x1, y1, x2, y2 = killfeed_region
+        if x2 <= x1 or y2 <= y1:
+            return False
+
+        killfeed_crop = frame[y1:y2, x1:x2]
+        if killfeed_crop.size == 0:
+            return False
+
+        # 3. Run EasyOCR on cropped region
+        results = reader.readtext(killfeed_crop)
+
+        # 5. Find matches
+        handles = config.get("vision", {}).get("player_handles", ["wildflame", "wildflame75"])
+        matches = []
+        for bbox, text, conf in results:
+            if conf > 0.4:
+                text_lower = text.lower()
+                if any(h in text_lower for h in handles):
+                    matches.append((bbox, text, conf))
+
+        if not matches:
+            return False
+
+        # 6. For each match, compute center_x
+        crop_midpoint = killfeed_crop.shape[1] / 2
+        for match in matches:
+            bbox = match[0]
+            center_x = (bbox[0][0] + bbox[2][0]) / 2
+            if center_x < crop_midpoint:
+                return True   # killer - valid clip
+
+        # 7. If all matches are on the right side
+        return False
+
+    except Exception as e:
+        logger.error(f"detect_player_kill failed: {e}")
+        return False
+
+
 def validate_event(video_path: str, event: Dict[str, Any], config: Dict[str, Any]) -> bool:
-    """
-    Validate an event using motion scoring.
+    # Step 1: motion gate (existing)
+    score = motion_score(video_path, event["start"], config)
+    threshold = config.get("vision", {}).get("motion_threshold", 0.12)
+    if score < threshold:
+        logger.info(f"Discarded (low_motion): score={score:.3f}")
+        return False
 
-    Args:
-        video_path: Path to the video file
-        event: Event dict with "start" timestamp
-        config: Config dict with "game_profiles" containing "motion_threshold" per game
+    # Step 2: killfeed gate (new)
+    if not detect_player_kill(video_path, event["start"], config):
+        logger.info(f"Discarded (no_player_kill): t={event['start']}")
+        return False
 
-    Returns:
-        True if event passes motion validation, False otherwise
-    """
-    threshold = config.get("current_game", "valorant")
-    game_profiles = config.get("game_profiles", {})
-    motion_threshold = game_profiles.get(threshold, {}).get("motion_threshold", 0.25)
-    score = motion_score(video_path, event.get("start", 0.0), config)
-    passes = score >= motion_threshold
-    logger.info(f"Event at {event.get('start', 0.0)}s: motion_score={score:.3f}, threshold={motion_threshold}, passes={passes}")
-    return passes
+    return True
 
 
 def run_validator_stage(video_path: str, events: List[Dict[str, Any]], config: Dict[str, Any], game: str = "generic") -> List[Dict[str, Any]]:

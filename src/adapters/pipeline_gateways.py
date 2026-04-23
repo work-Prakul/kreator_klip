@@ -14,7 +14,8 @@ def scan_video(video_path: str, config: Dict[str, Any], ui_callback: Callable[[s
 def validate_video(video_path: str, events: list, game_config: dict, ui_callback: Callable[[str, str], None]) -> list:
     """Validator gateway."""
     from core.vision import run_validator_stage
-    return run_validator_stage(video_path, events, game_config)
+    # Pass full game_config which should contain vision settings and game_profiles
+    return run_validator_stage(video_path, events, game_config, game_config.get("_game_id", "generic"))
 
 
 def cut_video(video_path: str, event_data: Dict[str, Any], output_path: str, config: Dict[str, Any], ui_callback: Callable[[str, str], None]) -> bool:

@@ -10,7 +10,7 @@ def get_system_profile(config_overrides: Optional[Dict[str, object]] = None) -> 
     """Return a normalized hardware profile for legacy callers."""
     profile = profile_hardware(config_overrides or {})
     whisper_config = {
-        "high": {"whisper_model": "large-v3", "compute_type": "float16"},
+        "high": {"whisper_model": "small", "compute_type": "float16"},
         "mid": {"whisper_model": "small", "compute_type": "float32"},
         "low": {"whisper_model": "base", "compute_type": "int8"}
     }[profile.performance_tier]

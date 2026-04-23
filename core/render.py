@@ -71,10 +71,10 @@ class ProgressParser:
                 self._total_duration = total_seconds
             
             # Calculate percentage
-            if self._total_duration and total_seconds > 0:
-                percentage = (total_seconds / self._total_duration) * 100
+            if self._total_duration and self._total_duration > 0:
+                percentage = min((total_seconds / self._total_duration) * 100, 100.0)
             else:
-                percentage = min(percentage, 100.0) if self._total_duration else 50.0
+                percentage = 50.0  # Unknown duration, assume midway
             
             with self._lock:
                 self._current_progress = percentage
@@ -129,17 +129,13 @@ class HardwareAcceleratedRenderer:
             Tuple (success, error_message)
         """
         # FFmpeg command with CUDA hardware acceleration
+        # Initialize command without output path
         cmd = [
             "ffmpeg",
-            "-hwaccel", "cuda",  # Force CUDA hardware acceleration
+            "-hwaccel", "cuda",
             "-i", input_path,
             "-ss", str(start_time),
-            "-t", str(duration),
-            "-c:v", "h264_nvenc" if not force_cpu else "libx264",
-            "-preset", "p4",  # Performance preset 4 (balanced)
-            "-c:a", "copy",
-            "-y",  # Overwrite output
-            output_path
+            "-t", str(duration)
         ]
         
         # Add facecam overlay if specified
@@ -149,39 +145,61 @@ class HardwareAcceleratedRenderer:
             w = facecam["w"]
             h = facecam["h"]
             
-            # Extract and overlay facecam
+            # Use the same source [0:v] for both main and facecam to ensure CUDA consistency
+            # unless a different source is explicitly provided.
+            source_input = "[0:v]"
+            if facecam.get('source') and facecam.get('source') != input_path:
+                cmd.insert(cmd.index("-i") + 2, "-i")
+                cmd.insert(cmd.index("-i") + 3, facecam.get('source'))
+                source_input = "[1:v]"
+
             cmd.extend([
                 "-filter_complex",
-                f"[0:v][1:v]crop=w={w}:h={h}:x={x}:y={y}[face];"
-                f"[0:v]crop=iw*9/16:ih[main];[main]scale=1080:1920[crop];"
-                f"[crop][face]overlay=0:0[out]",
+                f"[0:v]crop=iw*9/16:ih,scale=1080:1920[main];"
+                f"{source_input}crop={w}:{h}:{x}:{y},scale=320:180[facecam];"
+                f"[main][facecam]overlay=0:0[out]",
                 "-map", "[out]",
-                "-i", f"{facecam.get('source', '')}",
-                "-map", "0:v:1"
+                "-map", "0:a?"
             ])
-        
-        # Add crop filter if needed
-        if crop_916:
+        elif crop_916:
             cmd.extend([
                 "-filter_complex",
-                "[0:v]crop=iw*9/16:ih[main];[main]scale=1080:1920[out]"
+                "[0:v]crop=iw*9/16:ih,scale=1080:1920[out]",
+                "-map", "[out]",
+                "-map", "0:a?"
             ])
-            cmd.extend(["-map", "[out]"])
+        else:
+            cmd.extend(["-map", "0:v", "-map", "0:a?"])
+
+        # Add encoding settings
+        cmd.extend([
+            "-c:v", "h264_nvenc" if not force_cpu else "libx264",
+            "-preset", "p4",
+            "-c:a", "aac",
+            "-y",
+            output_path
+        ])
+        
+        # Verification: Print the full command for debugging
+        logger.info(f"FFmpeg Execution: {' '.join(cmd)}")
         
         try:
             process = subprocess.Popen(
                 cmd,
                 stdout=subprocess.DEVNULL,
                 stderr=subprocess.PIPE,
-                universal_newlines=True,
                 text=True,
                 bufsize=1
             )
+            
+            # Collect stderr lines for error reporting
+            stderr_lines = []
             
             # Read stderr in background thread for progress
             def read_stderr():
                 try:
                     for line in process.stderr:
+                        stderr_lines.append(line)
                         if self._stop_event.is_set():
                             break
                         progress = self.parser.parse_line(line)
@@ -201,15 +219,17 @@ class HardwareAcceleratedRenderer:
             
             if self._progress_thread:
                 self._stop_event.set()
-                self._progress_thread.join(timeout=1)
+                self._progress_thread.join(timeout=5)
             
             success = return_code == 0
-            error_msg = process.stderr.read() if not success else ""
+            error_msg = "".join(stderr_lines[-20:]) if not success else ""  # Last 20 lines
             
             return success, error_msg
             
         except subprocess.TimeoutExpired:
             logger.error("FFmpeg timeout")
+            if process:
+                process.kill()
             return False, "Timeout"
         except Exception as e:
             logger.error(f"FFmpeg error: {e}")

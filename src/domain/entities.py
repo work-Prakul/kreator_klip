@@ -20,6 +20,7 @@ class TriggerPacket:
     def to_dict(self) -> Dict[str, Any]:
         return {
             "clip_id": self.clip_id,
+            "video_path": self.video_path,
             "event_time": self.event_time,
             "is_ace": self.is_ace,
             "status": self.status,

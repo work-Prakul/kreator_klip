@@ -68,6 +68,8 @@ def run_scanner(video_path: str, config: Dict[str, Any], ui_callback):
         logging.error(f"Batch transcription failed: {exc}")
         segment_data = []
 
+    logging.debug(f"Sample transcript segments: {segment_data[:3]}")
+
     all_words = []
     for segment in segment_data:
         all_words.extend(segment["words"])

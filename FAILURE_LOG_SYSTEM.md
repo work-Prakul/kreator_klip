@@ -1,6 +1,6 @@
 # KreatorKlip Failure Logging System
 
-**Last Updated:** 2026-04-19  
+**Last Updated:** 2026-04-23  
 **Status:** ✅ ACTIVE
 
 ---
@@ -89,6 +89,34 @@ The application now has a comprehensive multi-level logging system that captures
 - Removed line: `asyncio.sleep(0.5)`
 - FilePicker overlay doesn't need async sleep
 - Replaced with synchronous page update
+
+---
+
+### Failure #5: Whisper VRAM Silent Crashes
+**Date:** 2026-04-22  
+**Error:** `CUDA out of memory` or silent process death during transcription  
+**File:** `core/transcription.py`  
+**Status:** ✅ FIXED
+
+**Solution:**
+- Implemented aggressive memory management: `gc.collect()` and `torch.cuda.empty_cache()`
+- Tightened transcription parameters: `beam_size=1`, `best_of=1`
+- Downsized default model to `small`
+- Added `vram_flash()` utility to clear cache after each transcription segment
+- Added per-segment debug logging to identify bottleneck clips
+
+---
+
+### Failure #6: Vision Gate calcOpticalFlowFarneback Argument Error
+**Date:** 2026-04-23  
+**Error:** `Missing argument 'flow'` in OpenCV  
+**File:** `core/vision.py`  
+**Status:** ✅ FIXED
+
+**Solution:**
+- Corrected the positional signature of `cv2.calcOpticalFlowFarneback` to explicitly include `None` for the `flow` argument.
+- Fixed a logic error where `flow.size != prev.size` was causing valid flows to be discarded.
+- Added verification logging for motion scores.
 
 ---
 

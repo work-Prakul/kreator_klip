@@ -11,4 +11,473 @@ All Critical Issues Resolved:
 - Duplicate entry points (Fixed)
 - Main window buffering (Fixed)
 - Two windows opening (Fixed)
-No Errors Recorded in This Session
+No Errors Recorded in This Session2026-04-21 11:20:53,522 - asyncio - ERROR - Task exception was never retrieved
+future: <Task finished name='Task-14' coro=<FilePicker.pick_files() done, defined at C:\Users\prabh\DEV\kreator_klip\venv\Lib\site-packages\flet\controls\services\file_picker.py:303> exception=RuntimeError('TimeoutException after 0:00:10.000000: Timeout waiting for invoke method listener for FilePicker(9).pick_files')>
+Traceback (most recent call last):
+  File "C:\Users\prabh\DEV\kreator_klip\venv\Lib\site-packages\flet\controls\services\file_picker.py", line 332, in pick_files
+    files = await self._invoke_method(
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\prabh\DEV\kreator_klip\venv\Lib\site-packages\flet\controls\base_control.py", line 398, in _invoke_method
+    return await self.page.session.invoke_method(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\prabh\DEV\kreator_klip\venv\Lib\site-packages\flet\messaging\session.py", line 392, in invoke_method
+    raise RuntimeError(err)
+RuntimeError: TimeoutException after 0:00:10.000000: Timeout waiting for invoke method listener for FilePicker(9).pick_files
+2026-04-21 11:27:20,616 - asyncio - ERROR - Task exception was never retrieved
+future: <Task finished name='Task-19' coro=<FilePicker.pick_files() done, defined at C:\Users\prabh\DEV\kreator_klip\venv\Lib\site-packages\flet\controls\services\file_picker.py:303> exception=RuntimeError('TimeoutException after 0:00:10.000000: Timeout waiting for invoke method listener for FilePicker(9).pick_files')>
+Traceback (most recent call last):
+  File "C:\Users\prabh\DEV\kreator_klip\venv\Lib\site-packages\flet\controls\services\file_picker.py", line 332, in pick_files
+    files = await self._invoke_method(
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\prabh\DEV\kreator_klip\venv\Lib\site-packages\flet\controls\base_control.py", line 398, in _invoke_method
+    return await self.page.session.invoke_method(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\prabh\DEV\kreator_klip\venv\Lib\site-packages\flet\messaging\session.py", line 392, in invoke_method
+    raise RuntimeError(err)
+RuntimeError: TimeoutException after 0:00:10.000000: Timeout waiting for invoke method listener for FilePicker(9).pick_files
+2026-04-21 11:27:21,860 - asyncio - ERROR - Task exception was never retrieved
+future: <Task finished name='Task-22' coro=<FilePicker.pick_files() done, defined at C:\Users\prabh\DEV\kreator_klip\venv\Lib\site-packages\flet\controls\services\file_picker.py:303> exception=RuntimeError('TimeoutException after 0:00:10.000000: Timeout waiting for invoke method listener for FilePicker(9).pick_files')>
+Traceback (most recent call last):
+  File "C:\Users\prabh\DEV\kreator_klip\venv\Lib\site-packages\flet\controls\services\file_picker.py", line 332, in pick_files
+    files = await self._invoke_method(
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\prabh\DEV\kreator_klip\venv\Lib\site-packages\flet\controls\base_control.py", line 398, in _invoke_method
+    return await self.page.session.invoke_method(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\prabh\DEV\kreator_klip\venv\Lib\site-packages\flet\messaging\session.py", line 392, in invoke_method
+    raise RuntimeError(err)
+RuntimeError: TimeoutException after 0:00:10.000000: Timeout waiting for invoke method listener for FilePicker(9).pick_files
+2026-04-21 11:28:23,456 - asyncio - ERROR - Task exception was never retrieved
+future: <Task finished name='Task-25' coro=<FilePicker.pick_files() done, defined at C:\Users\prabh\DEV\kreator_klip\venv\Lib\site-packages\flet\controls\services\file_picker.py:303> exception=RuntimeError('Session closed')>
+Traceback (most recent call last):
+  File "C:\Users\prabh\DEV\kreator_klip\venv\Lib\site-packages\flet\controls\services\file_picker.py", line 332, in pick_files
+    files = await self._invoke_method(
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\prabh\DEV\kreator_klip\venv\Lib\site-packages\flet\controls\base_control.py", line 398, in _invoke_method
+    return await self.page.session.invoke_method(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\prabh\DEV\kreator_klip\venv\Lib\site-packages\flet\messaging\session.py", line 392, in invoke_method
+    raise RuntimeError(err)
+RuntimeError: Session closed
+2026-04-23 12:19:45,089 - core.render - ERROR - Clip 1: Render failed -                     : 
+                    : Join the community & stay connected:
+                    : 🔗 Discord: https://discord.gg/EjEHXRwYrf
+                    : 
+                    : Intro, Outro music by - @HappySoulMusic
+                    : 
+                    : Like, share, and subscribe to support the grind. Let’s level up together. 🔥
+                    : 
+                    : .
+                    : .
+                    : #LiveGaming #Gameplay #GamingStream #IndianGaming #LiveNow
+  Duration: 00:00:20.00, start: 0.014000, bitrate: 3305 kb/s
+  Stream #0:0[0x1](und): Video: h264 (avc1 / 0x31637661), none(tv, bt709), 1920x1080, 4727 kb/s, SAR 1:1 DAR 16:9, 60.01 fps, 60 tbr, 16k tbn, start 6.633000 (default)
+    Metadata:
+      handler_name    : ISO Media file produced by Google Inc.
+  Stream #0:1[0x2](eng): Audio: opus (Opus / 0x7375704F), 48000 Hz, stereo, fltp, 130 kb/s, start 0.014000 (default)
+    Metadata:
+      handler_name    : SoundHandler
+[fc#0 @ 00000240c6b97c80] Filter 'scale:default' has output 0 (out) unconnected
+Error binding filtergraph inputs/outputs: Invalid argument
+
+2026-04-23 12:19:45,107 - core.render - ERROR - Cutter: Failed on timestamp 0.0
+2026-04-23 12:19:45,271 - root - ERROR - Finisher: Failed to finalize clip temp\raw_event_3.mp4: ffmpeg error (see stderr output for detail)
+2026-04-23 12:19:46,383 - core.render - ERROR - Clip 1: Render failed -                     : 
+                    : Join the community & stay connected:
+                    : 🔗 Discord: https://discord.gg/EjEHXRwYrf
+                    : 
+                    : Intro, Outro music by - @HappySoulMusic
+                    : 
+                    : Like, share, and subscribe to support the grind. Let’s level up together. 🔥
+                    : 
+                    : .
+                    : .
+                    : #LiveGaming #Gameplay #GamingStream #IndianGaming #LiveNow
+  Duration: 00:00:30.02, start: 0.002000, bitrate: 4206 kb/s
+  Stream #0:0[0x1](und): Video: h264 (High) (avc1 / 0x31637661), yuv420p(tv, bt709, progressive), 1920x1080 [SAR 1:1 DAR 16:9], 4743 kb/s, 60 fps, 60 tbr, 16k tbn, start 4.321000 (default)
+    Metadata:
+      handler_name    : ISO Media file produced by Google Inc.
+  Stream #0:1[0x2](eng): Audio: opus (Opus / 0x7375704F), 48000 Hz, stereo, fltp, 133 kb/s, start 0.002000 (default)
+    Metadata:
+      handler_name    : SoundHandler
+[fc#0 @ 0000026823dd7c80] Filter 'scale:default' has output 0 (out) unconnected
+Error binding filtergraph inputs/outputs: Invalid argument
+
+2026-04-23 12:19:46,386 - core.render - ERROR - Cutter: Failed on timestamp 48.312
+2026-04-23 12:19:46,470 - root - ERROR - Finisher: Failed to finalize clip temp\raw_event_1.mp4: ffmpeg error (see stderr output for detail)
+2026-04-23 12:19:51,012 - core.render - ERROR - Clip 1: Render failed -                     : 
+                    : Join the community & stay connected:
+                    : 🔗 Discord: https://discord.gg/EjEHXRwYrf
+                    : 
+                    : Intro, Outro music by - @HappySoulMusic
+                    : 
+                    : Like, share, and subscribe to support the grind. Let’s level up together. 🔥
+                    : 
+                    : .
+                    : .
+                    : #LiveGaming #Gameplay #GamingStream #IndianGaming #LiveNow
+  Duration: 00:00:30.02, start: 0.002000, bitrate: 4282 kb/s
+  Stream #0:0[0x1](und): Video: h264 (High) (avc1 / 0x31637661), yuv420p(tv, bt709, progressive), 1920x1080 [SAR 1:1 DAR 16:9], 4986 kb/s, 60 fps, 60 tbr, 16k tbn, start 5.041000 (default)
+    Metadata:
+      handler_name    : ISO Media file produced by Google Inc.
+  Stream #0:1[0x2](eng): Audio: opus (Opus / 0x7375704F), 48000 Hz, stereo, fltp, 121 kb/s, start 0.002000 (default)
+    Metadata:
+      handler_name    : SoundHandler
+[fc#0 @ 0000017f0aab7c80] Filter 'scale:default' has output 0 (out) unconnected
+Error binding filtergraph inputs/outputs: Invalid argument
+
+2026-04-23 12:19:51,020 - core.render - ERROR - Cutter: Failed on timestamp 2261.592
+2026-04-23 12:19:51,096 - root - ERROR - Finisher: Failed to finalize clip temp\raw_event_4.mp4: ffmpeg error (see stderr output for detail)
+2026-04-23 12:19:51,251 - core.render - ERROR - Clip 1: Render failed -                     : 
+                    : Join the community & stay connected:
+                    : 🔗 Discord: https://discord.gg/EjEHXRwYrf
+                    : 
+                    : Intro, Outro music by - @HappySoulMusic
+                    : 
+                    : Like, share, and subscribe to support the grind. Let’s level up together. 🔥
+                    : 
+                    : .
+                    : .
+                    : #LiveGaming #Gameplay #GamingStream #IndianGaming #LiveNow
+  Duration: 00:00:30.01, start: 0.018000, bitrate: 4685 kb/s
+  Stream #0:0[0x1](und): Video: h264 (High) (avc1 / 0x31637661), yuv420p(tv, bt709, progressive), 1920x1080 [SAR 1:1 DAR 16:9], 5123 kb/s, 60 fps, 60 tbr, 16k tbn, start 3.377000 (default)
+    Metadata:
+      handler_name    : ISO Media file produced by Google Inc.
+  Stream #0:1[0x2](eng): Audio: opus (Opus / 0x7375704F), 48000 Hz, stereo, fltp, 122 kb/s, start 0.018000 (default)
+    Metadata:
+      handler_name    : SoundHandler
+[fc#0 @ 000001efd26c7c80] Filter 'scale:default' has output 0 (out) unconnected
+Error binding filtergraph inputs/outputs: Invalid argument
+
+2026-04-23 12:19:51,258 - core.render - ERROR - Cutter: Failed on timestamp 2467.256
+2026-04-23 12:19:51,333 - root - ERROR - Finisher: Failed to finalize clip temp\raw_event_2.mp4: ffmpeg error (see stderr output for detail)
+2026-04-23 12:19:57,448 - core.render - ERROR - Clip 1: Render failed -                     : 
+                    : Join the community & stay connected:
+                    : 🔗 Discord: https://discord.gg/EjEHXRwYrf
+                    : 
+                    : Intro, Outro music by - @HappySoulMusic
+                    : 
+                    : Like, share, and subscribe to support the grind. Let’s level up together. 🔥
+                    : 
+                    : .
+                    : .
+                    : #LiveGaming #Gameplay #GamingStream #IndianGaming #LiveNow
+  Duration: 00:00:20.56, start: 0.010000, bitrate: 5051 kb/s
+  Stream #0:0[0x1](und): Video: h264 (High) (avc1 / 0x31637661), yuv420p(tv, bt709, progressive), 1920x1080 [SAR 1:1 DAR 16:9], 5046 kb/s, 60 fps, 60 tbr, 16k tbn, start 0.529000 (default)
+    Metadata:
+      handler_name    : ISO Media file produced by Google Inc.
+  Stream #0:1[0x2](eng): Audio: opus (Opus / 0x7375704F), 48000 Hz, stereo, fltp, 127 kb/s, start 0.010000 (default)
+    Metadata:
+      handler_name    : SoundHandler
+[fc#0 @ 000001d1ec937c80] Filter 'scale:default' has output 0 (out) unconnected
+Error binding filtergraph inputs/outputs: Invalid argument
+
+2026-04-23 12:19:57,476 - core.render - ERROR - Cutter: Failed on timestamp 4606.104
+2026-04-23 12:19:57,688 - root - ERROR - Finisher: Failed to finalize clip temp\raw_event_5.mp4: ffmpeg error (see stderr output for detail)
+2026-04-23 12:19:57,787 - core.render - ERROR - Clip 1: Render failed -                     : 
+                    : Join the community & stay connected:
+                    : 🔗 Discord: https://discord.gg/EjEHXRwYrf
+                    : 
+                    : Intro, Outro music by - @HappySoulMusic
+                    : 
+                    : Like, share, and subscribe to support the grind. Let’s level up together. 🔥
+                    : 
+                    : .
+                    : .
+                    : #LiveGaming #Gameplay #GamingStream #IndianGaming #LiveNow
+  Duration: 00:00:30.02, start: 0.010000, bitrate: 5243 kb/s
+  Stream #0:0[0x1](und): Video: h264 (High) (avc1 / 0x31637661), yuv420p(tv, bt709, progressive), 1920x1080 [SAR 1:1 DAR 16:9], 5197 kb/s, 60 fps, 60 tbr, 16k tbn, start 0.529000 (default)
+    Metadata:
+      handler_name    : ISO Media file produced by Google Inc.
+  Stream #0:1[0x2](eng): Audio: opus (Opus / 0x7375704F), 48000 Hz, stereo, fltp, 121 kb/s, start 0.010000 (default)
+    Metadata:
+      handler_name    : SoundHandler
+[fc#0 @ 00000248ee487c80] Filter 'scale:default' has output 0 (out) unconnected
+Error binding filtergraph inputs/outputs: Invalid argument
+
+2026-04-23 12:19:57,791 - core.render - ERROR - Cutter: Failed on timestamp 862.104
+2026-04-23 12:19:57,939 - root - ERROR - Finisher: Failed to finalize clip temp\raw_event_8.mp4: ffmpeg error (see stderr output for detail)
+2026-04-23 12:19:59,987 - core.render - ERROR - Clip 1: Render failed -                     : 
+                    : Join the community & stay connected:
+                    : 🔗 Discord: https://discord.gg/EjEHXRwYrf
+                    : 
+                    : Intro, Outro music by - @HappySoulMusic
+                    : 
+                    : Like, share, and subscribe to support the grind. Let’s level up together. 🔥
+                    : 
+                    : .
+                    : .
+                    : #LiveGaming #Gameplay #GamingStream #IndianGaming #LiveNow
+  Duration: 00:00:30.01, start: 0.014000, bitrate: 4824 kb/s
+  Stream #0:0[0x1](und): Video: h264 (High) (avc1 / 0x31637661), yuv420p(tv, bt709, progressive), 1920x1080 [SAR 1:1 DAR 16:9], 4987 kb/s, 60 fps, 60 tbr, 16k tbn, start 1.793000 (default)
+    Metadata:
+      handler_name    : ISO Media file produced by Google Inc.
+  Stream #0:1[0x2](eng): Audio: opus (Opus / 0x7375704F), 48000 Hz, stereo, fltp, 118 kb/s, start 0.014000 (default)
+    Metadata:
+      handler_name    : SoundHandler
+[fc#0 @ 000001cfb3a97c80] Filter 'scale:default' has output 0 (out) unconnected
+Error binding filtergraph inputs/outputs: Invalid argument
+
+2026-04-23 12:20:00,015 - core.render - ERROR - Cutter: Failed on timestamp 4298.84
+2026-04-23 12:20:00,121 - root - ERROR - Finisher: Failed to finalize clip temp\raw_event_6.mp4: ffmpeg error (see stderr output for detail)
+2026-04-23 12:20:01,107 - core.render - ERROR - Clip 1: Render failed -                     : 
+                    : Join the community & stay connected:
+                    : 🔗 Discord: https://discord.gg/EjEHXRwYrf
+                    : 
+                    : Intro, Outro music by - @HappySoulMusic
+                    : 
+                    : Like, share, and subscribe to support the grind. Let’s level up together. 🔥
+                    : 
+                    : .
+                    : .
+                    : #LiveGaming #Gameplay #GamingStream #IndianGaming #LiveNow
+  Duration: 00:00:30.01, start: 0.010000, bitrate: 4540 kb/s
+  Stream #0:0[0x1](und): Video: h264 (High) (avc1 / 0x31637661), yuv420p(tv, bt709, progressive), 1920x1080 [SAR 1:1 DAR 16:9], 4585 kb/s, 60 fps, 60 tbr, 16k tbn, start 1.169000 (default)
+    Metadata:
+      handler_name    : ISO Media file produced by Google Inc.
+  Stream #0:1[0x2](eng): Audio: opus (Opus / 0x7375704F), 48000 Hz, stereo, fltp, 117 kb/s, start 0.010000 (default)
+    Metadata:
+      handler_name    : SoundHandler
+[fc#0 @ 00000140f7527c80] Filter 'scale:default' has output 0 (out) unconnected
+Error binding filtergraph inputs/outputs: Invalid argument
+
+2026-04-23 12:20:01,128 - core.render - ERROR - Cutter: Failed on timestamp 2661.464
+2026-04-23 12:20:01,260 - root - ERROR - Finisher: Failed to finalize clip temp\raw_event_7.mp4: ffmpeg error (see stderr output for detail)
+2026-04-23 12:20:03,942 - core.render - ERROR - Clip 1: Render failed -                     : 
+                    : Join the community & stay connected:
+                    : 🔗 Discord: https://discord.gg/EjEHXRwYrf
+                    : 
+                    : Intro, Outro music by - @HappySoulMusic
+                    : 
+                    : Like, share, and subscribe to support the grind. Let’s level up together. 🔥
+                    : 
+                    : .
+                    : .
+                    : #LiveGaming #Gameplay #GamingStream #IndianGaming #LiveNow
+  Duration: 00:00:30.03, start: 0.002000, bitrate: 5059 kb/s
+  Stream #0:0[0x1](und): Video: h264 (High) (avc1 / 0x31637661), yuv420p(tv, bt709, progressive), 1920x1080 [SAR 1:1 DAR 16:9], 5070 kb/s, 60 fps, 60 tbr, 16k tbn, start 0.881000 (default)
+    Metadata:
+      handler_name    : ISO Media file produced by Google Inc.
+  Stream #0:1[0x2](eng): Audio: opus (Opus / 0x7375704F), 48000 Hz, stereo, fltp, 123 kb/s, start 0.002000 (default)
+    Metadata:
+      handler_name    : SoundHandler
+[fc#0 @ 0000027225b37c80] Filter 'scale:default' has output 0 (out) unconnected
+Error binding filtergraph inputs/outputs: Invalid argument
+
+2026-04-23 12:20:03,983 - core.render - ERROR - Cutter: Failed on timestamp 1077.752
+2026-04-23 12:20:04,177 - root - ERROR - Finisher: Failed to finalize clip temp\raw_event_10.mp4: ffmpeg error (see stderr output for detail)
+2026-04-23 12:20:07,385 - core.render - ERROR - Clip 1: Render failed -                     : 
+                    : Join the community & stay connected:
+                    : 🔗 Discord: https://discord.gg/EjEHXRwYrf
+                    : 
+                    : Intro, Outro music by - @HappySoulMusic
+                    : 
+                    : Like, share, and subscribe to support the grind. Let’s level up together. 🔥
+                    : 
+                    : .
+                    : .
+                    : #LiveGaming #Gameplay #GamingStream #IndianGaming #LiveNow
+  Duration: 00:00:30.00, start: 0.014000, bitrate: 4032 kb/s
+  Stream #0:0[0x1](und): Video: h264 (avc1 / 0x31637661), none(tv, bt709), 1920x1080, 4794 kb/s, SAR 1:1 DAR 16:9, 60 fps, 60 tbr, 16k tbn, start 5.633000 (default)
+    Metadata:
+      handler_name    : ISO Media file produced by Google Inc.
+  Stream #0:1[0x2](eng): Audio: opus (Opus / 0x7375704F), 48000 Hz, stereo, fltp, 124 kb/s, start 0.014000 (default)
+    Metadata:
+      handler_name    : SoundHandler
+[fc#0 @ 0000019e381d7c80] Filter 'scale:default' has output 0 (out) unconnected
+Error binding filtergraph inputs/outputs: Invalid argument
+
+2026-04-23 12:20:07,405 - core.render - ERROR - Cutter: Failed on timestamp 2567.0
+2026-04-23 12:20:07,521 - root - ERROR - Finisher: Failed to finalize clip temp\raw_event_9.mp4: ffmpeg error (see stderr output for detail)
+2026-04-23 12:20:08,116 - core.render - ERROR - Clip 1: Render failed -                     : 
+                    : Join the community & stay connected:
+                    : 🔗 Discord: https://discord.gg/EjEHXRwYrf
+                    : 
+                    : Intro, Outro music by - @HappySoulMusic
+                    : 
+                    : Like, share, and subscribe to support the grind. Let’s level up together. 🔥
+                    : 
+                    : .
+                    : .
+                    : #LiveGaming #Gameplay #GamingStream #IndianGaming #LiveNow
+  Duration: 00:00:30.02, start: 0.014000, bitrate: 4883 kb/s
+  Stream #0:0[0x1](und): Video: h264 (High) (avc1 / 0x31637661), yuv420p(tv, bt709, progressive), 1920x1080 [SAR 1:1 DAR 16:9], 5106 kb/s, 60 fps, 60 tbr, 16k tbn, start 2.113000 (default)
+    Metadata:
+      handler_name    : ISO Media file produced by Google Inc.
+  Stream #0:1[0x2](eng): Audio: opus (Opus / 0x7375704F), 48000 Hz, stereo, fltp, 120 kb/s, start 0.014000 (default)
+    Metadata:
+      handler_name    : SoundHandler
+[fc#0 @ 0000015e32d97c80] Filter 'scale:default' has output 0 (out) unconnected
+Error binding filtergraph inputs/outputs: Invalid argument
+
+2026-04-23 12:20:08,127 - core.render - ERROR - Cutter: Failed on timestamp 1586.52
+2026-04-23 12:20:08,254 - root - ERROR - Finisher: Failed to finalize clip temp\raw_event_11.mp4: ffmpeg error (see stderr output for detail)
+2026-04-23 12:20:10,879 - core.render - ERROR - Clip 1: Render failed -                     : 
+                    : Join the community & stay connected:
+                    : 🔗 Discord: https://discord.gg/EjEHXRwYrf
+                    : 
+                    : Intro, Outro music by - @HappySoulMusic
+                    : 
+                    : Like, share, and subscribe to support the grind. Let’s level up together. 🔥
+                    : 
+                    : .
+                    : .
+                    : #LiveGaming #Gameplay #GamingStream #IndianGaming #LiveNow
+  Duration: 00:00:30.02, start: 0.002000, bitrate: 5118 kb/s
+  Stream #0:0[0x1](und): Video: h264 (High) (avc1 / 0x31637661), yuv420p(tv, bt709, progressive), 1920x1080 [SAR 1:1 DAR 16:9], 5105 kb/s, 60 fps, 60 tbr, 16k tbn, start 0.721000 (default)
+    Metadata:
+      handler_name    : ISO Media file produced by Google Inc.
+  Stream #0:1[0x2](eng): Audio: opus (Opus / 0x7375704F), 48000 Hz, stereo, fltp, 120 kb/s, start 0.002000 (default)
+    Metadata:
+      handler_name    : SoundHandler
+[fc#0 @ 0000027395157c80] Filter 'scale:default' has output 0 (out) unconnected
+Error binding filtergraph inputs/outputs: Invalid argument
+
+2026-04-23 12:20:10,885 - core.render - ERROR - Cutter: Failed on timestamp 813.912
+2026-04-23 12:20:10,998 - root - ERROR - Finisher: Failed to finalize clip temp\raw_event_13.mp4: ffmpeg error (see stderr output for detail)
+2026-04-23 12:20:12,089 - core.render - ERROR - Clip 1: Render failed -                     : 
+                    : Join the community & stay connected:
+                    : 🔗 Discord: https://discord.gg/EjEHXRwYrf
+                    : 
+                    : Intro, Outro music by - @HappySoulMusic
+                    : 
+                    : Like, share, and subscribe to support the grind. Let’s level up together. 🔥
+                    : 
+                    : .
+                    : .
+                    : #LiveGaming #Gameplay #GamingStream #IndianGaming #LiveNow
+  Duration: 00:00:30.02, start: 0.002000, bitrate: 4999 kb/s
+  Stream #0:0[0x1](und): Video: h264 (High) (avc1 / 0x31637661), yuv420p(tv, bt709, progressive), 1920x1080 [SAR 1:1 DAR 16:9], 4968 kb/s, 60 fps, 60 tbr, 16k tbn, start 0.641000 (default)
+    Metadata:
+      handler_name    : ISO Media file produced by Google Inc.
+  Stream #0:1[0x2](eng): Audio: opus (Opus / 0x7375704F), 48000 Hz, stereo, fltp, 122 kb/s, start 0.002000 (default)
+    Metadata:
+      handler_name    : SoundHandler
+[fc#0 @ 00000190a3017c80] Filter 'scale:default' has output 0 (out) unconnected
+Error binding filtergraph inputs/outputs: Invalid argument
+
+2026-04-23 12:20:12,108 - core.render - ERROR - Cutter: Failed on timestamp 459.992
+2026-04-23 12:20:12,240 - root - ERROR - Finisher: Failed to finalize clip temp\raw_event_14.mp4: ffmpeg error (see stderr output for detail)
+2026-04-23 12:20:13,787 - core.render - ERROR - Clip 1: Render failed -                     : 
+                    : Join the community & stay connected:
+                    : 🔗 Discord: https://discord.gg/EjEHXRwYrf
+                    : 
+                    : Intro, Outro music by - @HappySoulMusic
+                    : 
+                    : Like, share, and subscribe to support the grind. Let’s level up together. 🔥
+                    : 
+                    : .
+                    : .
+                    : #LiveGaming #Gameplay #GamingStream #IndianGaming #LiveNow
+  Duration: 00:00:30.02, start: 0.010000, bitrate: 4037 kb/s
+  Stream #0:0[0x1](und): Video: h264 (High) (avc1 / 0x31637661), yuv420p(tv, bt709, progressive), 1920x1080 [SAR 1:1 DAR 16:9], 4391 kb/s, 60 fps, 60 tbr, 16k tbn, start 3.329000 (default)
+    Metadata:
+      handler_name    : ISO Media file produced by Google Inc.
+  Stream #0:1[0x2](eng): Audio: opus (Opus / 0x7375704F), 48000 Hz, stereo, fltp, 118 kb/s, start 0.010000 (default)
+    Metadata:
+      handler_name    : SoundHandler
+[fc#0 @ 0000027ce84c7c80] Filter 'scale:default' has output 0 (out) unconnected
+Error binding filtergraph inputs/outputs: Invalid argument
+
+2026-04-23 12:20:13,790 - core.render - ERROR - Cutter: Failed on timestamp 4117.304
+2026-04-23 12:20:13,851 - root - ERROR - Finisher: Failed to finalize clip temp\raw_event_12.mp4: ffmpeg error (see stderr output for detail)
+2026-04-23 12:55:04,241 - KREATOR_KLIP - ERROR - Page switch error (idx=1): CircleAvatar.__init__() got an unexpected keyword argument 'icon'
+Traceback (most recent call last):
+  File "C:\Users\prabh\DEV\kreator_klip\main.py", line 508, in switch_page
+    content_area.content = get_gallery_page()
+                           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\prabh\DEV\kreator_klip\main.py", line 447, in get_gallery_page
+    CircleAvatar(icon=icons.PLAY_CIRCLE_FILL, size=32, bgcolor=ft.Colors.CYAN_700),
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: CircleAvatar.__init__() got an unexpected keyword argument 'icon'
+
+2026-04-23 12:55:07,761 - KREATOR_KLIP - ERROR - Page switch error (idx=1): CircleAvatar.__init__() got an unexpected keyword argument 'icon'
+Traceback (most recent call last):
+  File "C:\Users\prabh\DEV\kreator_klip\main.py", line 508, in switch_page
+    content_area.content = get_gallery_page()
+                           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\prabh\DEV\kreator_klip\main.py", line 447, in get_gallery_page
+    CircleAvatar(icon=icons.PLAY_CIRCLE_FILL, size=32, bgcolor=ft.Colors.CYAN_700),
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: CircleAvatar.__init__() got an unexpected keyword argument 'icon'
+
+2026-04-23 12:55:09,350 - KREATOR_KLIP - ERROR - Page switch error (idx=1): CircleAvatar.__init__() got an unexpected keyword argument 'icon'
+Traceback (most recent call last):
+  File "C:\Users\prabh\DEV\kreator_klip\main.py", line 508, in switch_page
+    content_area.content = get_gallery_page()
+                           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\prabh\DEV\kreator_klip\main.py", line 447, in get_gallery_page
+    CircleAvatar(icon=icons.PLAY_CIRCLE_FILL, size=32, bgcolor=ft.Colors.CYAN_700),
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: CircleAvatar.__init__() got an unexpected keyword argument 'icon'
+
+2026-04-23 12:55:09,868 - KREATOR_KLIP - ERROR - Page switch error (idx=1): CircleAvatar.__init__() got an unexpected keyword argument 'icon'
+Traceback (most recent call last):
+  File "C:\Users\prabh\DEV\kreator_klip\main.py", line 508, in switch_page
+    content_area.content = get_gallery_page()
+                           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\prabh\DEV\kreator_klip\main.py", line 447, in get_gallery_page
+    CircleAvatar(icon=icons.PLAY_CIRCLE_FILL, size=32, bgcolor=ft.Colors.CYAN_700),
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: CircleAvatar.__init__() got an unexpected keyword argument 'icon'
+
+2026-04-23 12:55:10,022 - KREATOR_KLIP - ERROR - Page switch error (idx=1): CircleAvatar.__init__() got an unexpected keyword argument 'icon'
+Traceback (most recent call last):
+  File "C:\Users\prabh\DEV\kreator_klip\main.py", line 508, in switch_page
+    content_area.content = get_gallery_page()
+                           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\prabh\DEV\kreator_klip\main.py", line 447, in get_gallery_page
+    CircleAvatar(icon=icons.PLAY_CIRCLE_FILL, size=32, bgcolor=ft.Colors.CYAN_700),
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: CircleAvatar.__init__() got an unexpected keyword argument 'icon'
+
+2026-04-23 12:55:10,178 - KREATOR_KLIP - ERROR - Page switch error (idx=1): CircleAvatar.__init__() got an unexpected keyword argument 'icon'
+Traceback (most recent call last):
+  File "C:\Users\prabh\DEV\kreator_klip\main.py", line 508, in switch_page
+    content_area.content = get_gallery_page()
+                           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\prabh\DEV\kreator_klip\main.py", line 447, in get_gallery_page
+    CircleAvatar(icon=icons.PLAY_CIRCLE_FILL, size=32, bgcolor=ft.Colors.CYAN_700),
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: CircleAvatar.__init__() got an unexpected keyword argument 'icon'
+
+2026-04-23 12:55:10,339 - KREATOR_KLIP - ERROR - Page switch error (idx=1): CircleAvatar.__init__() got an unexpected keyword argument 'icon'
+Traceback (most recent call last):
+  File "C:\Users\prabh\DEV\kreator_klip\main.py", line 508, in switch_page
+    content_area.content = get_gallery_page()
+                           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\prabh\DEV\kreator_klip\main.py", line 447, in get_gallery_page
+    CircleAvatar(icon=icons.PLAY_CIRCLE_FILL, size=32, bgcolor=ft.Colors.CYAN_700),
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: CircleAvatar.__init__() got an unexpected keyword argument 'icon'
+
+2026-04-23 12:55:10,507 - KREATOR_KLIP - ERROR - Page switch error (idx=1): CircleAvatar.__init__() got an unexpected keyword argument 'icon'
+Traceback (most recent call last):
+  File "C:\Users\prabh\DEV\kreator_klip\main.py", line 508, in switch_page
+    content_area.content = get_gallery_page()
+                           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\prabh\DEV\kreator_klip\main.py", line 447, in get_gallery_page
+    CircleAvatar(icon=icons.PLAY_CIRCLE_FILL, size=32, bgcolor=ft.Colors.CYAN_700),
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: CircleAvatar.__init__() got an unexpected keyword argument 'icon'
+
+2026-04-23 13:10:07,387 - KREATOR_KLIP - ERROR - Page switch error (idx=1): CircleAvatar.__init__() got an unexpected keyword argument 'icon'
+Traceback (most recent call last):
+  File "C:\Users\prabh\DEV\kreator_klip\main.py", line 508, in switch_page
+    content_area.content = get_gallery_page()
+                           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\prabh\DEV\kreator_klip\main.py", line 447, in get_gallery_page
+    CircleAvatar(icon=icons.PLAY_CIRCLE_FILL, size=32, bgcolor=ft.Colors.CYAN_700),
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: CircleAvatar.__init__() got an unexpected keyword argument 'icon'
+
+2026-04-23 13:12:40,702 - KREATOR_KLIP - ERROR - Page switch error (idx=1): CircleAvatar.__init__() got an unexpected keyword argument 'icon'
+Traceback (most recent call last):
+  File "C:\Users\prabh\DEV\kreator_klip\main.py", line 508, in switch_page
+    content_area.content = get_gallery_page()
+                           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\prabh\DEV\kreator_klip\main.py", line 447, in get_gallery_page
+    CircleAvatar(icon=icons.PLAY_CIRCLE_FILL, size=32, bgcolor=ft.Colors.CYAN_700),
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: CircleAvatar.__init__() got an unexpected keyword argument 'icon'
+
